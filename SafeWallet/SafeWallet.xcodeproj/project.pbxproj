@@ -16,6 +16,8 @@
 		598C2F172B34C66300C291C3 /* SafeWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F162B34C66300C291C3 /* SafeWalletTests.swift */; };
 		598C2F212B34C66300C291C3 /* SafeWalletUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F202B34C66300C291C3 /* SafeWalletUITests.swift */; };
 		598C2F232B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F222B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift */; };
+		598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F382B34D44000C291C3 /* Card+CoreDataClass.swift */; };
+		598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		598C2F1C2B34C66300C291C3 /* SafeWalletUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SafeWalletUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		598C2F202B34C66300C291C3 /* SafeWalletUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletUITests.swift; sourceTree = "<group>"; };
 		598C2F222B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		598C2F382B34D44000C291C3 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataClass.swift"; sourceTree = "<group>"; };
+		598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -99,6 +103,7 @@
 		598C2EFE2B34C66200C291C3 /* SafeWallet */ = {
 			isa = PBXGroup;
 			children = (
+				598C2F2F2B34C70700C291C3 /* Models */,
 				598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */,
 				598C2F012B34C66200C291C3 /* Persistence.swift */,
 				598C2F062B34C66200C291C3 /* ContentView.swift */,
@@ -133,6 +138,15 @@
 				598C2F222B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift */,
 			);
 			path = SafeWalletUITests;
+			sourceTree = "<group>";
+		};
+		598C2F2F2B34C70700C291C3 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				598C2F382B34D44000C291C3 /* Card+CoreDataClass.swift */,
+				598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -266,7 +280,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */,
+				598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */,
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
+				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
 				598C2F072B34C66200C291C3 /* ContentView.swift in Sources */,
 				598C2F022B34C66200C291C3 /* Persistence.swift in Sources */,
 			);
@@ -450,7 +466,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SevenBackwards.SafeWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -488,7 +505,8 @@
 				PRODUCT_BUNDLE_IDENTIFIER = SevenBackwards.SafeWallet;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator macosx";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

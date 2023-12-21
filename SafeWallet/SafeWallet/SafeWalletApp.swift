@@ -13,7 +13,7 @@ struct SafeWalletApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            CardListView()
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }
