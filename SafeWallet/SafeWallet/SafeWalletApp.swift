@@ -9,12 +9,12 @@ import SwiftUI
 
 @main
 struct SafeWalletApp: App {
-    let persistenceController = PersistenceController.shared
+    let viewContext = PersistenceController.shared.container.viewContext
 
     var body: some Scene {
         WindowGroup {
-            CardListView()
-                .environment(\.managedObjectContext, persistenceController.container.viewContext)
+            CardListView(viewModel: CardListViewModel())
+                .environment(\.managedObjectContext, viewContext)
         }
     }
 }

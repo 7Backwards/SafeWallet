@@ -10,7 +10,7 @@
 		598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */; };
 		598C2F022B34C66200C291C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F012B34C66200C291C3 /* Persistence.swift */; };
 		598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F032B34C66200C291C3 /* SafeWallet.xcdatamodeld */; };
-		598C2F072B34C66200C291C3 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F062B34C66200C291C3 /* ContentView.swift */; };
+		598C2F072B34C66200C291C3 /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F062B34C66200C291C3 /* CardListView.swift */; };
 		598C2F092B34C66300C291C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598C2F082B34C66300C291C3 /* Assets.xcassets */; };
 		598C2F0D2B34C66300C291C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 598C2F0C2B34C66300C291C3 /* Preview Assets.xcassets */; };
 		598C2F172B34C66300C291C3 /* SafeWalletTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F162B34C66300C291C3 /* SafeWalletTests.swift */; };
@@ -18,6 +18,9 @@
 		598C2F232B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F222B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift */; };
 		598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F382B34D44000C291C3 /* Card+CoreDataClass.swift */; };
 		598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */; };
+		598C2F3D2B360DC800C291C3 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F3C2B360DC800C291C3 /* AddCardView.swift */; };
+		598C2F412B37413900C291C3 /* AddCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F402B37413900C291C3 /* AddCardViewModel.swift */; };
+		598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F422B37421A00C291C3 /* CardListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,7 +45,7 @@
 		598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletApp.swift; sourceTree = "<group>"; };
 		598C2F012B34C66200C291C3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
 		598C2F042B34C66200C291C3 /* SafeWallet.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SafeWallet.xcdatamodel; sourceTree = "<group>"; };
-		598C2F062B34C66200C291C3 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		598C2F062B34C66200C291C3 /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
 		598C2F082B34C66300C291C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		598C2F0A2B34C66300C291C3 /* SafeWallet.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SafeWallet.entitlements; sourceTree = "<group>"; };
 		598C2F0C2B34C66300C291C3 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -53,6 +56,9 @@
 		598C2F222B34C66300C291C3 /* SafeWalletUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		598C2F382B34D44000C291C3 /* Card+CoreDataClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataClass.swift"; sourceTree = "<group>"; };
 		598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Card+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		598C2F3C2B360DC800C291C3 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
+		598C2F402B37413900C291C3 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
+		598C2F422B37421A00C291C3 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,10 +109,11 @@
 		598C2EFE2B34C66200C291C3 /* SafeWallet */ = {
 			isa = PBXGroup;
 			children = (
+				598C2F3F2B37412700C291C3 /* ViewModels */,
+				598C2F3E2B360DD200C291C3 /* Views */,
 				598C2F2F2B34C70700C291C3 /* Models */,
 				598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */,
 				598C2F012B34C66200C291C3 /* Persistence.swift */,
-				598C2F062B34C66200C291C3 /* ContentView.swift */,
 				598C2F082B34C66300C291C3 /* Assets.xcassets */,
 				598C2F0A2B34C66300C291C3 /* SafeWallet.entitlements */,
 				598C2F032B34C66200C291C3 /* SafeWallet.xcdatamodeld */,
@@ -147,6 +154,24 @@
 				598C2F392B34D44000C291C3 /* Card+CoreDataProperties.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		598C2F3E2B360DD200C291C3 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				598C2F062B34C66200C291C3 /* CardListView.swift */,
+				598C2F3C2B360DC800C291C3 /* AddCardView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		598C2F3F2B37412700C291C3 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				598C2F402B37413900C291C3 /* AddCardViewModel.swift */,
+				598C2F422B37421A00C291C3 /* CardListViewModel.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,12 +304,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				598C2F412B37413900C291C3 /* AddCardViewModel.swift in Sources */,
+				598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */,
 				598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */,
 				598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */,
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
-				598C2F072B34C66200C291C3 /* ContentView.swift in Sources */,
+				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
 				598C2F022B34C66200C291C3 /* Persistence.swift in Sources */,
+				598C2F3D2B360DC800C291C3 /* AddCardView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
