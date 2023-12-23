@@ -9,24 +9,25 @@ import SwiftUI
 import CoreData
 
 struct CardListView: View {
-    @State private var searchText = ""
+    @Environment(\.managedObjectContext) private var viewContext
+    @ObservedObject var viewModel = CardListViewModel()
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.holderName, ascending: true)],
         animation: .default)
-    private var cards: FetchedResults<Card>
+    var cards: FetchedResults<Card>
 
     var body: some View {
         
         NavigationView {
             VStack(spacing: 0) {
-                SearchBar(text: $searchText)
+                SearchBar(text: $viewModel.searchText)
                     .background(Color.white)
 
                 List {
                     ForEach(cards.filter {
-                        searchText.isEmpty ||
-                        $0.holderName.contains(searchText) ||
-                        $0.cardNumber.contains(searchText)
+                        viewModel.searchText.isEmpty ||
+                        $0.holderName.contains(viewModel.searchText) ||
+                        $0.cardNumber.contains(viewModel.searchText)
                     }, id: \.self) { card in
                         CardRow(card: card)
                             .padding(.vertical, 10)
@@ -42,6 +43,14 @@ struct CardListView: View {
                 
             }
             .navigationBarTitle("SafeWallet", displayMode: .large)
+            .navigationBarItems(trailing: Button(action: {
+                viewModel.showingAddCardView = true
+            }) {
+                Image(systemName: "plus.circle")
+            })
+            .sheet(isPresented: $viewModel.showingAddCardView) {
+                AddCardView(viewModel: AddCardViewModel(context: viewContext))
+            }
             .background(Color.white.edgesIgnoringSafeArea(.all))
         }
     }
