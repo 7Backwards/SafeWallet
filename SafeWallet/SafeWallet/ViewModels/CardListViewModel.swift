@@ -12,4 +12,21 @@ import SwiftUI
 class CardListViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var showingAddCardView = false
+    private var viewContext: NSManagedObjectContext
+    
+    init(context: NSManagedObjectContext) {
+        self.viewContext = context
+    }
+    
+    func deleteCards(at offsets: IndexSet, from cards: FetchedResults<Card>) {
+        withAnimation {
+            offsets.map { cards[$0] }.forEach(viewContext.delete)
+            do {
+                try viewContext.save()
+            } catch {
+                // Handle the error appropriately
+                print("Error when trying to delete card: \(error)")
+            }
+        }
+    }
 }
