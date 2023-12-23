@@ -10,14 +10,13 @@ import CoreData
 
 struct CardListView: View {
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var viewModel = CardListViewModel()
+    @StateObject var viewModel: CardListViewModel
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.holderName, ascending: true)],
         animation: .default)
     var cards: FetchedResults<Card>
-
+    
     var body: some View {
-        
         NavigationView {
             VStack(spacing: 0) {
                 SearchBar(text: $viewModel.searchText)
@@ -29,8 +28,15 @@ struct CardListView: View {
                         $0.holderName.contains(viewModel.searchText) ||
                         $0.cardNumber.contains(viewModel.searchText)
                     }, id: \.self) { card in
-                        CardRow(card: card)
-                            .padding(.vertical, 10)
+                        CardRow(card: card, onDelete: {
+                            if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                                print("Deleting card at index: \(index)")
+                                viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
+                            } else {
+                                print("Failed to find index for card")
+                            }
+                        })
+                            .padding(.all, 10)
                             .listRowInsets(EdgeInsets())
                     }
                     .listRowBackground(Color.white)
@@ -38,7 +44,7 @@ struct CardListView: View {
                 }
                 .scrollIndicators(.hidden)
                 .listStyle(.plain)
-                .padding([.top, .leading, .trailing], 20)
+                .padding([.top], 20)
                 .scrollContentBackground(.hidden)
                 
             }
@@ -58,9 +64,15 @@ struct CardListView: View {
 
 struct CardRow: View {
     var card: Card
+    var onDelete: () -> Void
+
+    @GestureState private var gestureDragOffset = CGSize.zero
+    @State private var dragOffset = CGSize.zero
+    @State private var shouldShowDeleteConfirmation = false
 
     var body: some View {
         ZStack {
+            // Card content
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
                     Text(card.holderName)
@@ -89,14 +101,59 @@ struct CardRow: View {
                 }
             }
             .padding()
+            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
+            .cornerRadius(10)
+            .shadow(radius: 5)
+            .offset(x: dragOffset.width + gestureDragOffset.width) // Apply updated offset
+            .onTapGesture { }
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .updating($gestureDragOffset, body: { (value, state, _) in
+                        let translationX = value.translation.width
+                        // Only update the state if the user is swiping to the left
+                        if translationX < 0, translationX > -70 {
+                            state = CGSize(width: translationX, height: 0)
+                        }
+                    })
+                    .onEnded { value in
+                        if value.translation.width < 0 {
+                            if value.translation.width <= -50 {
+                                shouldShowDeleteConfirmation = true
+                            }
+                            dragOffset = .zero
+                        }
+                    }
+            )
+
+            .alert(isPresented: $shouldShowDeleteConfirmation) {
+                Alert(
+                    title: Text("Delete Card"),
+                    message: Text("Are you sure you want to delete this card?"),
+                    primaryButton: .default(Text("Cancel"), action: { shouldShowDeleteConfirmation = false }),
+                    secondaryButton: .destructive(Text("Delete"), action: {
+                        withAnimation {
+                            onDelete()
+                        }
+                        shouldShowDeleteConfirmation = false
+                    })
+                )
+            }
+
+            // Swipe to delete overlay
+            if gestureDragOffset.width < 0 {
+                HStack {
+                    Spacer()
+                    Image(systemName: "trash")
+                        .foregroundColor(.red)
+                        .padding()
+                        .background(Color.white.opacity(dragOffset.width < -100 ? 1 : 0))
+                        .frame(width: abs(gestureDragOffset.width))
+                }
+            }
         }
-        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-        .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
-        .cornerRadius(10)
-        .shadow(radius: 5)
     }
 }
-
 
 
 struct SearchBar: View {
@@ -137,7 +194,6 @@ struct CardListView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
         
-        // Check for existing mock data using a fetch request.
         let fetchRequest: NSFetchRequest<Card> = Card.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "holderName != nil")
         
@@ -181,8 +237,6 @@ struct CardListView_Previews: PreviewProvider {
             print("Error fetching or saving mock cards: \(error)")
         }
 
-        return CardListView().environment(\.managedObjectContext, context)
+        return CardListView(viewModel: CardListViewModel(context: context)).environment(\.managedObjectContext, context)
     }
 }
-
-

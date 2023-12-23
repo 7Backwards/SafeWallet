@@ -12,7 +12,7 @@ import Foundation
 struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @Environment(\.managedObjectContext) private var viewContext
-    @ObservedObject var viewModel: AddCardViewModel
+    @StateObject var viewModel: AddCardViewModel
 
     var body: some View {
         NavigationView {
