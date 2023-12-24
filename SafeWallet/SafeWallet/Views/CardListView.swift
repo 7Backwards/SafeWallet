@@ -36,10 +36,12 @@ struct CardListView: View {
                                 print("Failed to find index for card")
                             }
                         })
-                            .padding(.all, 10)
-                            .listRowInsets(EdgeInsets())
+                        .padding([.horizontal], 20)
+                        .padding([.vertical], 10)
+                        .listRowInsets(EdgeInsets())
                     }
                     .listRowBackground(Color.white)
+                    .listRowSeparator(.hidden)
                     
                 }
                 .scrollIndicators(.hidden)
@@ -105,13 +107,11 @@ struct CardRow: View {
             .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(10)
             .shadow(radius: 5)
-            .offset(x: dragOffset.width + gestureDragOffset.width) // Apply updated offset
-            .onTapGesture { }
+            .offset(x: dragOffset.width + gestureDragOffset.width)
             .gesture(
-                DragGesture(minimumDistance: 0)
+                DragGesture(minimumDistance: 30)
                     .updating($gestureDragOffset, body: { (value, state, _) in
                         let translationX = value.translation.width
-                        // Only update the state if the user is swiping to the left
                         if translationX < 0, translationX > -70 {
                             state = CGSize(width: translationX, height: 0)
                         }
@@ -119,9 +119,11 @@ struct CardRow: View {
                     .onEnded { value in
                         if value.translation.width < 0 {
                             if value.translation.width <= -50 {
-                                shouldShowDeleteConfirmation = true
+                                withAnimation {
+                                    dragOffset = .zero
+                                    shouldShowDeleteConfirmation = true
+                                }
                             }
-                            dragOffset = .zero
                         }
                     }
             )
@@ -141,13 +143,12 @@ struct CardRow: View {
             }
 
             // Swipe to delete overlay
-            if gestureDragOffset.width < 0 {
+            if gestureDragOffset.width < -10 {
                 HStack {
                     Spacer()
                     Image(systemName: "trash")
                         .foregroundColor(.red)
                         .padding()
-                        .background(Color.white.opacity(dragOffset.width < -100 ? 1 : 0))
                         .frame(width: abs(gestureDragOffset.width))
                 }
             }
