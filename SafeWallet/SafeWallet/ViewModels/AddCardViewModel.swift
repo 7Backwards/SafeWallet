@@ -10,11 +10,6 @@ import CoreData
 import SwiftUI
 
 class AddCardViewModel: ObservableObject {
-    var holderName: String = ""
-    var cardNumber: String = ""
-    var expiryDate: String = ""
-    var cvvCode: String = ""
-    var cardName: String = ""
     
     var viewContext: NSManagedObjectContext
     
@@ -22,7 +17,8 @@ class AddCardViewModel: ObservableObject {
         self.viewContext = context
     }
     
-    func addCard() {
+    func addCard(cardName: String, holderName: String, cardNumber: String, expiryDate: String, cvvCode: String) {
+        guard !cardName.isEmpty, !holderName.isEmpty, !cardNumber.isEmpty, !expiryDate.isEmpty, !cvvCode.isEmpty else { return }
         let newCard = Card(context: viewContext)
         newCard.holderName = holderName
         newCard.cardNumber = cardNumber
