@@ -58,9 +58,45 @@ struct CardListView: View {
             })
             .sheet(isPresented: $viewModel.showingAddCardView) {
                 AddCardView(viewModel: AddCardViewModel(context: viewContext))
+                    .presentationDetents([.medium])
             }
             .background(Color.white.edgesIgnoringSafeArea(.all))
         }
+    }
+}
+
+
+struct SearchBar: View {
+    @Binding var text: String
+
+    var body: some View {
+        HStack {
+            TextField("Search", text: $text)
+                .padding(7)
+                .padding(.horizontal, 25)
+                .background(Color(.systemGray6))
+                .cornerRadius(8)
+                .overlay(
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                            .padding(.leading, 8)
+                        
+                        if !text.isEmpty {
+                            Button(action: {
+                                self.text = ""
+                            }) {
+                                Image(systemName: "multiply.circle.fill")
+                                    .foregroundColor(.gray)
+                                    .padding(.trailing, 8)
+                            }
+                        }
+                    }
+                )
+                .padding(.horizontal, 10)
+        }
+        .padding(.horizontal)
     }
 }
 
@@ -74,34 +110,7 @@ struct CardRow: View {
 
     var body: some View {
         ZStack {
-            // Card content
-            VStack(alignment: .leading, spacing: 10) {
-                HStack {
-                    Text(card.holderName)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                    Spacer()
-                    Text(card.cardName)
-                        .font(.caption)
-                        .foregroundColor(.white)
-                }
-                Spacer()
-                Text(card.cardNumber)
-                    .font(.title3)
-                    .foregroundColor(.white)
-                Spacer()
-                HStack {
-                    Text("Expires: \(card.expiryDate)")
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                    Spacer()
-                    Text("CVC: \(card.cvvCode)")
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                        .padding(.trailing, 10)
-                }
-            }
+            CardDetailsView(card: card)
             .padding()
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
             .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
@@ -153,41 +162,6 @@ struct CardRow: View {
                 }
             }
         }
-    }
-}
-
-
-struct SearchBar: View {
-    @Binding var text: String
-
-    var body: some View {
-        HStack {
-            TextField("Search", text: $text)
-                .padding(7)
-                .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
-                .cornerRadius(8)
-                .overlay(
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                            .padding(.leading, 8)
-                        
-                        if !text.isEmpty {
-                            Button(action: {
-                                self.text = ""
-                            }) {
-                                Image(systemName: "multiply.circle.fill")
-                                    .foregroundColor(.gray)
-                                    .padding(.trailing, 8)
-                            }
-                        }
-                    }
-                )
-                .padding(.horizontal, 10)
-        }
-        .padding(.horizontal)
     }
 }
 

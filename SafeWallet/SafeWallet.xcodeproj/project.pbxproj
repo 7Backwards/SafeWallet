@@ -21,6 +21,8 @@
 		598C2F3D2B360DC800C291C3 /* AddCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F3C2B360DC800C291C3 /* AddCardView.swift */; };
 		598C2F412B37413900C291C3 /* AddCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F402B37413900C291C3 /* AddCardViewModel.swift */; };
 		598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F422B37421A00C291C3 /* CardListViewModel.swift */; };
+		598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */; };
+		59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +61,8 @@
 		598C2F3C2B360DC800C291C3 /* AddCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardView.swift; sourceTree = "<group>"; };
 		598C2F402B37413900C291C3 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
 		598C2F422B37421A00C291C3 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
+		598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
+		59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +165,7 @@
 			children = (
 				598C2F062B34C66200C291C3 /* CardListView.swift */,
 				598C2F3C2B360DC800C291C3 /* AddCardView.swift */,
+				598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -170,6 +175,7 @@
 			children = (
 				598C2F402B37413900C291C3 /* AddCardViewModel.swift */,
 				598C2F422B37421A00C291C3 /* CardListViewModel.swift */,
+				59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -311,6 +317,8 @@
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
 				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
+				59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */,
+				598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */,
 				598C2F022B34C66200C291C3 /* Persistence.swift in Sources */,
 				598C2F3D2B360DC800C291C3 /* AddCardView.swift in Sources */,
 			);
@@ -486,7 +494,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
@@ -525,7 +533,7 @@
 				"INFOPLIST_KEY_UIStatusBarStyle[sdk=iphonesimulator*]" = UIStatusBarStyleDefault;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 13.5;
