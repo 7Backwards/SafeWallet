@@ -21,7 +21,7 @@ struct CardListView: View {
             VStack(spacing: 0) {
                 if viewModel.isUnlocked {
                     SearchBar(text: $viewModel.searchText)
-                        .background(Color.white)
+                        .background(Color(UIColor.systemBackground))
                     
                     List {
                         ForEach(cards.filter {
@@ -41,7 +41,7 @@ struct CardListView: View {
                             .padding([.vertical], 10)
                             .listRowInsets(EdgeInsets())
                         }
-                        .listRowBackground(Color.white)
+                        .listRowBackground(Color(UIColor.systemBackground))
                         .listRowSeparator(.hidden)
                         
                     }
@@ -72,7 +72,7 @@ struct CardListView: View {
                 AddCardView(viewModel: AddCardViewModel(context: viewContext))
                     .presentationDetents([.medium])
             }
-            .background(Color.white.edgesIgnoringSafeArea(.all))
+            .background(Color(UIColor.systemBackground))
         }
     }
 }
@@ -86,7 +86,7 @@ struct SearchBar: View {
             TextField("Search", text: $text)
                 .padding(7)
                 .padding(.horizontal, 25)
-                .background(Color(.systemGray6))
+                .background(Color(UIColor.secondarySystemBackground))
                 .cornerRadius(8)
                 .overlay(
                     HStack {
@@ -226,6 +226,8 @@ struct CardListView_Previews: PreviewProvider {
 
         let viewModel = CardListViewModel(context: context)
         viewModel.isUnlocked = true
-        return CardListView(viewModel: viewModel).environment(\.managedObjectContext, context)
+        return CardListView(viewModel: viewModel)
+            .environment(\.managedObjectContext, context)
+            .preferredColorScheme(.dark)
     }
 }
