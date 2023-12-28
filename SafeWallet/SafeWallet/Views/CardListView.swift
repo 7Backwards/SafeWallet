@@ -19,36 +19,48 @@ struct CardListView: View {
     var body: some View {
         NavigationView {
             VStack(spacing: 0) {
-                SearchBar(text: $viewModel.searchText)
-                    .background(Color.white)
-
-                List {
-                    ForEach(cards.filter {
-                        viewModel.searchText.isEmpty ||
-                        $0.holderName.contains(viewModel.searchText) ||
-                        $0.cardNumber.contains(viewModel.searchText)
-                    }, id: \.self) { card in
-                        CardRow(card: card, onDelete: {
-                            if let index = cards.firstIndex(where: { $0.id == card.id }) {
-                                print("Deleting card at index: \(index)")
-                                viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
-                            } else {
-                                print("Failed to find index for card")
-                            }
-                        })
-                        .padding([.horizontal], 20)
-                        .padding([.vertical], 10)
-                        .listRowInsets(EdgeInsets())
-                    }
-                    .listRowBackground(Color.white)
-                    .listRowSeparator(.hidden)
+                if viewModel.isUnlocked {
+                    SearchBar(text: $viewModel.searchText)
+                        .background(Color.white)
                     
+                    List {
+                        ForEach(cards.filter {
+                            viewModel.searchText.isEmpty ||
+                            $0.holderName.contains(viewModel.searchText) ||
+                            $0.cardNumber.contains(viewModel.searchText)
+                        }, id: \.self) { card in
+                            CardRow(card: card, onDelete: {
+                                if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                                    print("Deleting card at index: \(index)")
+                                    viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
+                                } else {
+                                    print("Failed to find index for card")
+                                }
+                            })
+                            .padding([.horizontal], 20)
+                            .padding([.vertical], 10)
+                            .listRowInsets(EdgeInsets())
+                        }
+                        .listRowBackground(Color.white)
+                        .listRowSeparator(.hidden)
+                        
+                    }
+                    .scrollIndicators(.hidden)
+                    .listStyle(.plain)
+                    .padding([.top], 20)
+                    .scrollContentBackground(.hidden)
+                } else {
+                    Image(systemName: "lock.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 50, height: 50)
+                        .foregroundColor(.gray)
+                        .padding()
+                        .onAppear(perform: viewModel.authenticate)
+                        .onTapGesture {
+                            viewModel.authenticate()
+                        }
                 }
-                .scrollIndicators(.hidden)
-                .listStyle(.plain)
-                .padding([.top], 20)
-                .scrollContentBackground(.hidden)
-                
             }
             .navigationBarTitle("SafeWallet", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
@@ -212,6 +224,8 @@ struct CardListView_Previews: PreviewProvider {
             print("Error fetching or saving mock cards: \(error)")
         }
 
-        return CardListView(viewModel: CardListViewModel(context: context)).environment(\.managedObjectContext, context)
+        let viewModel = CardListViewModel(context: context)
+        viewModel.isUnlocked = true
+        return CardListView(viewModel: viewModel).environment(\.managedObjectContext, context)
     }
 }

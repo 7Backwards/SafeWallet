@@ -23,6 +23,7 @@
 		598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F422B37421A00C291C3 /* CardListViewModel.swift */; };
 		598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */; };
 		59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */; };
+		59DFA1A12B3DCD5000EFD403 /* BiometricAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFA1A02B3DCD5000EFD403 /* BiometricAuth.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,8 @@
 		598C2F422B37421A00C291C3 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
 		59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewModel.swift; sourceTree = "<group>"; };
+		59DFA1A02B3DCD5000EFD403 /* BiometricAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
+		59DFA1A22B3DCDB500EFD403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -113,11 +116,13 @@
 		598C2EFE2B34C66200C291C3 /* SafeWallet */ = {
 			isa = PBXGroup;
 			children = (
+				59DFA1A22B3DCDB500EFD403 /* Info.plist */,
 				598C2F3F2B37412700C291C3 /* ViewModels */,
 				598C2F3E2B360DD200C291C3 /* Views */,
 				598C2F2F2B34C70700C291C3 /* Models */,
 				598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */,
 				598C2F012B34C66200C291C3 /* Persistence.swift */,
+				59DFA1A02B3DCD5000EFD403 /* BiometricAuth.swift */,
 				598C2F082B34C66300C291C3 /* Assets.xcassets */,
 				598C2F0A2B34C66300C291C3 /* SafeWallet.entitlements */,
 				598C2F032B34C66200C291C3 /* SafeWallet.xcdatamodeld */,
@@ -316,6 +321,7 @@
 				598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */,
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
+				59DFA1A12B3DCD5000EFD403 /* BiometricAuth.swift in Sources */,
 				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
 				59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */,
 				598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */,
@@ -484,6 +490,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SafeWallet/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Protect users card's with authentication";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
@@ -523,6 +531,8 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SafeWallet/Info.plist;
+				INFOPLIST_KEY_NSFaceIDUsageDescription = "Protect users card's with authentication";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents[sdk=iphoneos*]" = YES;
