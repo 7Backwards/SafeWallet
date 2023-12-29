@@ -12,7 +12,7 @@ struct CardListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject var viewModel: CardListViewModel
     @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Card.holderName, ascending: true)],
+        sortDescriptors: [NSSortDescriptor(keyPath: \Card.cardName, ascending: true)],
         animation: .default)
     var cards: FetchedResults<Card>
     
@@ -26,7 +26,6 @@ struct CardListView: View {
                     List {
                         ForEach(cards.filter {
                             viewModel.searchText.isEmpty ||
-                            $0.holderName.contains(viewModel.searchText) ||
                             $0.cardNumber.contains(viewModel.searchText)
                         }, id: \.self) { card in
                             CardRow(card: card, onDelete: {
@@ -123,9 +122,7 @@ struct CardRow: View {
     var body: some View {
         ZStack {
             CardDetailsView(card: card)
-            .padding()
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
             .cornerRadius(10)
             .shadow(radius: 5)
             .offset(x: dragOffset.width + gestureDragOffset.width)
@@ -182,18 +179,12 @@ struct CardListView_Previews: PreviewProvider {
         let context = PersistenceController.preview.container.viewContext
         
         let fetchRequest: NSFetchRequest<Card> = Card.fetchRequest()
-        fetchRequest.predicate = NSPredicate(format: "holderName != nil")
         
         do {
             let results = try context.fetch(fetchRequest)
             if results.isEmpty {
-                let holderNames = [
-                    "Alice Smith", "Bob Johnson", "Charlie Brown",
-                    "David Wilson", "Emma Harris", "Frank Clark",
-                    "Grace Davis", "Henry Miller", "Isabella Taylor", "Jack Anderson"
-                ]
                 let cardNumbers = [
-                    "1234 5678 0000 1111", "1234 5678 1111 2222", "1234 5678 2222 3333",
+                    "4234 5678 0000 1111", "1234 5678 1111 2222", "1234 5678 2222 3333",
                     "1234 5678 3333 4444", "1234 5678 4444 5555", "1234 5678 5555 6666",
                     "1234 5678 6666 7777", "1234 5678 7777 8888", "1234 5678 8888 9999", "1234 5678 9999 0000"
                 ]
@@ -210,9 +201,8 @@ struct CardListView_Previews: PreviewProvider {
                     "JCB", "Maestro", "Visa Electron", "Mir", "Troy"
                 ]
 
-                for i in 0..<holderNames.count {
+                for i in 0..<cardNumbers.count {
                     let newCard = Card(context: context)
-                    newCard.holderName = holderNames[i]
                     newCard.cardNumber = cardNumbers[i]
                     newCard.expiryDate = expiryDates[i]
                     newCard.cvvCode = cvvCodes[i]
@@ -228,6 +218,5 @@ struct CardListView_Previews: PreviewProvider {
         viewModel.isUnlocked = true
         return CardListView(viewModel: viewModel)
             .environment(\.managedObjectContext, context)
-            .preferredColorScheme(.dark)
     }
 }

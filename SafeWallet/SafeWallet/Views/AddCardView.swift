@@ -24,19 +24,17 @@ struct AddCardView: View {
                 Spacer()
                 VStack(spacing: 30) {
                     CardDetailsView(cardName: $cardName,
-                                    holderName: $holderName,
                                     cardNumber: $cardNumber,
                                     expiryDate: $expiryDate,
                                     cvvCode: $cvvCode)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-                    .background(LinearGradient(gradient: Gradient(colors: [Color.blue, Color.purple]), startPoint: .leading, endPoint: .trailing))
                     .cornerRadius(10)
                     .shadow(radius: 5)
                     .padding(.horizontal)
                     
                     Button("Save Card") {
-                        viewModel.addCard(cardName: cardName, holderName: holderName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode)
+                        viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode)
                         presentationMode.wrappedValue.dismiss()
                     }
                     .frame(width: UIScreen.main.bounds.width - 30, height: 50)
@@ -58,7 +56,6 @@ struct AddCardView: View {
 extension Card {
     static var placeholder: Card {
         let card = Card(context: PersistenceController.preview.container.viewContext)
-        card.holderName = "Holder Name"
         card.cardName = "Card Name"
         card.cardNumber = "Card Number"
         card.expiryDate = "MM/YY"
