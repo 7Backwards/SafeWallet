@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 class CardDetailsViewModel: ObservableObject {
     func formatCardNumber(_ number: String) -> String {
@@ -21,5 +22,19 @@ class CardDetailsViewModel: ObservableObject {
             let end = trimmed.index(start, offsetBy: 4, limitedBy: trimmed.endIndex) ?? trimmed.endIndex
             return String(trimmed[start..<end])
         }.joined(separator: " ")
+    }
+    
+    func getCardIssuerImage(cardNumber: String) -> Image? {
+        let formattedNumber = cardNumber.replacingOccurrences(of: " ", with: "")
+        
+        if formattedNumber.hasPrefix("4") {
+            return Image("visa")
+        } else if formattedNumber.range(of: "^(51|52|53|54|55|2221|222[2-9]|22[3-9]\\d|2[3-6]\\d\\d|27[01]\\d|2720)", options: .regularExpression) != nil {
+            return Image("mastercard")
+        } else if formattedNumber.range(of: "^(34|37)", options: .regularExpression) != nil {
+            return Image("american-express")
+        } else {
+            return nil
+        }
     }
 }

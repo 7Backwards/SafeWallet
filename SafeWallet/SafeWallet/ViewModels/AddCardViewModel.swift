@@ -17,10 +17,9 @@ class AddCardViewModel: ObservableObject {
         self.viewContext = context
     }
     
-    func addCard(cardName: String, holderName: String, cardNumber: String, expiryDate: String, cvvCode: String) {
-        guard !cardName.isEmpty, !holderName.isEmpty, !cardNumber.isEmpty, !expiryDate.isEmpty, !cvvCode.isEmpty else { return }
+    func addCard(cardName: String, cardNumber: String, expiryDate: String, cvvCode: String) {
+        guard !cardName.isEmpty, !cardNumber.isEmpty, !expiryDate.isEmpty, !cvvCode.isEmpty else { return }
         let newCard = Card(context: viewContext)
-        newCard.holderName = holderName
         newCard.cardNumber = cardNumber
         newCard.expiryDate = expiryDate
         newCard.cvvCode = cvvCode

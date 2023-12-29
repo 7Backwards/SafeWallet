@@ -11,16 +11,14 @@ import Combine
 
 struct CardDetailsView: View {
     @Binding var cardName: String
-    @Binding var holderName: String
     @Binding var cardNumber: String
     @Binding var expiryDate: String
     @Binding var cvvCode: String
     @StateObject var viewModel = CardDetailsViewModel()
     var isEditable: Bool
 
-    init(cardName: Binding<String>, holderName: Binding<String>, cardNumber: Binding<String>, expiryDate: Binding<String>, cvvCode: Binding<String>) {
+    init(cardName: Binding<String>, cardNumber: Binding<String>, expiryDate: Binding<String>, cvvCode: Binding<String>) {
         self._cardName = cardName
-        self._holderName = holderName
         self._cardNumber = cardNumber
         self._expiryDate = expiryDate
         self._cvvCode = cvvCode
@@ -29,7 +27,6 @@ struct CardDetailsView: View {
     
     init(card: Card) {
         self._cardName = .constant(card.cardName)
-        self._holderName = .constant(card.holderName)
         self._cardNumber = .constant(card.cardNumber)
         self._expiryDate = .constant(card.expiryDate)
         self._cvvCode = .constant(card.cvvCode)
@@ -37,76 +34,88 @@ struct CardDetailsView: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 10) {
-            HStack() {
+        ZStack(alignment: .topTrailing) {
+            VStack(alignment: .leading, spacing: 15) {
                 if isEditable {
-                    TextField("Holder Name", text: $holderName, prompt: Text("Name").foregroundColor(.white.opacity(0.5)))
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .foregroundColor(.white)
-                        .accentColor(.white)
-                        .frame(width: 2/3 * UIScreen.main.bounds.width)
-                        
+                    TextField("Name", text: $cardName)
+                        .font(.headline)
                 } else {
-                    Text(holderName)
-                        .font(.title2)
+                    Text(cardName.uppercased())
+                        .font(.headline)
                         .fontWeight(.bold)
-                        .foregroundColor(.white)
                 }
-                Spacer()
-                if isEditable {
-                    TextField("Card Name", text: $cardName, prompt: Text("Alias").foregroundColor(.white.opacity(0.5)))
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .accentColor(.white)
-                } else {
-                    Text(cardName)
-                        .font(.caption)
-                        .foregroundColor(.white)
-                        .multilineTextAlignment(.leading)
-                }
-            }
-            Spacer()
-            if isEditable {
-                TextField("Card Number", text: $cardNumber, prompt: Text("Number").foregroundColor(.white.opacity(0.5)))
-                    .font(.title3)
-                    .foregroundColor(.white)
-                    .frame(width: 2/3 * UIScreen.main.bounds.width)
-                    .accentColor(.white)
-                    .keyboardType(.numberPad)
-                    .onChange(of: cardNumber, initial: true) { oldValue, newValue in
-                        self.cardNumber = self.viewModel.formatCardNumber(newValue)
+                
+            
+                VStack(alignment: .leading) {
+                    if isEditable {
+                        TextField("Number", text: $cardNumber)
+                            .font(.title2)
+                            .keyboardType(.numberPad)
+                            .onChange(of: cardNumber, initial: true) { oldValue, newValue in
+                                self.cardNumber = self.viewModel.formatCardNumber(newValue)
+                            }
+                    } else {
+                        Text(cardNumber)
+                            .font(.title3)
+                            .fontWeight(.bold)
+                            .lineLimit(1)
+                            .layoutPriority(1)
                     }
-            } else {
-                Text(cardNumber)
-                    .font(.title3)
-                    .foregroundColor(.white)
+                }
+            
+                HStack {
+                    if isEditable {
+                        TextField("CVV", text: $cvvCode)
+                            .font(.footnote)
+                            .keyboardType(.numberPad)
+                            .frame(width: UIScreen.main.bounds.width * 0.50)
+                    } else {
+                        if !cardName.isEmpty {
+                            VStack {
+                                Text("CVV")
+                                    .font(.caption)
+                                    .fontWeight(.semibold)
+                                Text(cvvCode)
+                                    .font(.headline)
+                                    .fontWeight(.bold)
+                            }
+                        }
+                    }
+
+                    Spacer()
+                    Spacer()
+
+                    VStack(alignment: .trailing) {
+                        if isEditable {
+                            TextField("Expires", text: $expiryDate)
+                                .font(.headline)
+                        } else {
+                            Text("Expires on")
+                                .font(.caption)
+                                .fontWeight(.semibold)
+                            Text(expiryDate)
+                                .font(.headline)
+                                .fontWeight(.bold)
+                        }
+                    }
+                }
             }
-            Spacer()
-            HStack {
-                if isEditable {
-                    TextField("Expires", text: $expiryDate, prompt: Text("Expire").foregroundColor(.white.opacity(0.5)))
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                        .frame(width: 2/3 * UIScreen.main.bounds.width)
-                        .accentColor(.white)
-                } else {
-                    Text(expiryDate)
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                }
-                Spacer()
-                if isEditable {
-                    TextField("CVC", text: $cvvCode, prompt: Text("CVV").foregroundColor(.white.opacity(0.5)))
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                        .accentColor(.white)
-                        .keyboardType(.numberPad)
-                } else {
-                    Text(cvvCode)
-                        .font(.footnote)
-                        .foregroundColor(.white)
-                }
+            .padding()
+            .background(Color(.systemBackground))
+            .cornerRadius(10)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(Color.secondary, lineWidth: 1)
+            )
+            .shadow(radius: 3)
+            
+            if let cardIssuerImage = viewModel.getCardIssuerImage(cardNumber: cardNumber) {
+                cardIssuerImage
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .frame(width: 40, height: 40)
+                    .padding(.trailing, 15)
+                    .padding(.top, 8)
             }
         }
     }

@@ -16,11 +16,9 @@ extension Card {
     }
 
     @NSManaged public var cardName: String
-    @NSManaged public var holderName: String
     @NSManaged public var cardNumber: String
     @NSManaged public var expiryDate: String
     @NSManaged public var cvvCode: String
-
 }
 
 extension Card : Identifiable {}
