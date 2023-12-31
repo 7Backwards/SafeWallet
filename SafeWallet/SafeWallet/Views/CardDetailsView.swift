@@ -43,6 +43,7 @@ struct CardDetailsView: View {
                     Text(cardName.uppercased())
                         .font(.headline)
                         .fontWeight(.bold)
+                        .textSelection(.enabled)
                 }
                 
             
@@ -60,6 +61,7 @@ struct CardDetailsView: View {
                             .fontWeight(.bold)
                             .lineLimit(1)
                             .layoutPriority(1)
+                            .textSelection(.enabled)
                     }
                 }
             
@@ -78,6 +80,7 @@ struct CardDetailsView: View {
                                 Text(cvvCode)
                                     .font(.headline)
                                     .fontWeight(.bold)
+                                    .textSelection(.enabled)
                             }
                         }
                     }
@@ -96,6 +99,7 @@ struct CardDetailsView: View {
                             Text(expiryDate)
                                 .font(.headline)
                                 .fontWeight(.bold)
+                                .textSelection(.enabled)
                         }
                     }
                 }
