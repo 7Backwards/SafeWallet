@@ -22,6 +22,7 @@
 		598C2F412B37413900C291C3 /* AddCardViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F402B37413900C291C3 /* AddCardViewModel.swift */; };
 		598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F422B37421A00C291C3 /* CardListViewModel.swift */; };
 		598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */; };
+		598D18C12B4C72B900D88C08 /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598D18C02B4C72B900D88C08 /* CardView.swift */; };
 		59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */; };
 		59DFA1A12B3DCD5000EFD403 /* BiometricAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DFA1A02B3DCD5000EFD403 /* BiometricAuth.swift */; };
 /* End PBXBuildFile section */
@@ -63,6 +64,7 @@
 		598C2F402B37413900C291C3 /* AddCardViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddCardViewModel.swift; sourceTree = "<group>"; };
 		598C2F422B37421A00C291C3 /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsView.swift; sourceTree = "<group>"; };
+		598D18C02B4C72B900D88C08 /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		59DFA19E2B3B6FD000EFD403 /* CardDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewModel.swift; sourceTree = "<group>"; };
 		59DFA1A02B3DCD5000EFD403 /* BiometricAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiometricAuth.swift; sourceTree = "<group>"; };
 		59DFA1A22B3DCDB500EFD403 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -171,6 +173,7 @@
 				598C2F062B34C66200C291C3 /* CardListView.swift */,
 				598C2F3C2B360DC800C291C3 /* AddCardView.swift */,
 				598C2F442B37BB1C00C291C3 /* CardDetailsView.swift */,
+				598D18C02B4C72B900D88C08 /* CardView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -322,6 +325,7 @@
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
 				59DFA1A12B3DCD5000EFD403 /* BiometricAuth.swift in Sources */,
+				598D18C12B4C72B900D88C08 /* CardView.swift in Sources */,
 				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
 				59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */,
 				598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */,
