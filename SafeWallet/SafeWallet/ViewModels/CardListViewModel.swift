@@ -12,7 +12,6 @@ import SwiftUI
 class CardListViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var showingAddCardView = false
-    @Published var isUnlocked = false
     private var viewContext: NSManagedObjectContext
     
     init(context: NSManagedObjectContext) {
@@ -31,14 +30,12 @@ class CardListViewModel: ObservableObject {
         }
     }
     
-    func authenticate() {
-        let biometricAuth = BiometricAuth()
-        biometricAuth.authenticateUser { result in
-            switch result {
-            case .success:
-                self.isUnlocked = true
-            case .failure(let error):
-                print("Authentication error: \(error.localizedDescription)")
+    func authenticate(completion: @escaping (Bool) -> Void) {
+        BiometricAuth().authenticateUser { result in
+            if let result = try? result.get(), result {
+                completion(true)
+            } else {
+                completion(false)
             }
         }
     }

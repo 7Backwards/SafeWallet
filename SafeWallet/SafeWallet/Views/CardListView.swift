@@ -11,23 +11,30 @@ import CoreData
 struct CardListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject var viewModel: CardListViewModel
+    @State private var path = NavigationPath()
     @FetchRequest(
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.cardName, ascending: true)],
         animation: .default)
     var cards: FetchedResults<Card>
     
     var body: some View {
-        NavigationView {
+        NavigationStack(path: $path) {
             VStack(spacing: 0) {
-                if viewModel.isUnlocked {
-                    SearchBar(text: $viewModel.searchText)
-                        .background(Color(UIColor.systemBackground))
-                    
-                    List {
-                        ForEach(cards.filter {
-                            viewModel.searchText.isEmpty ||
-                            $0.cardNumber.contains(viewModel.searchText)
-                        }, id: \.self) { card in
+                SearchBar(text: $viewModel.searchText)
+                    .background(Color(UIColor.systemBackground))
+                
+                List {
+                    ForEach(cards.filter {
+                        viewModel.searchText.isEmpty ||
+                        $0.cardNumber.contains(viewModel.searchText)
+                    }, id: \.self) { card in
+                        Button {
+                            viewModel.authenticate { result in
+                                if result {
+                                    path.append(card)
+                                }
+                            }
+                        } label: {
                             CardRow(card: card, onDelete: {
                                 if let index = cards.firstIndex(where: { $0.id == card.id }) {
                                     print("Deleting card at index: \(index)")
@@ -36,30 +43,22 @@ struct CardListView: View {
                                     print("Failed to find index for card")
                                 }
                             })
-                            .padding([.horizontal], 20)
+                            
+                            .padding([.horizontal], 5)
                             .padding([.vertical], 10)
                             .listRowInsets(EdgeInsets())
                         }
-                        .listRowBackground(Color(UIColor.systemBackground))
-                        .listRowSeparator(.hidden)
-                        
                     }
-                    .scrollIndicators(.hidden)
-                    .listStyle(.plain)
-                    .padding([.top], 20)
-                    .scrollContentBackground(.hidden)
-                } else {
-                    Image(systemName: "lock.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                        .foregroundColor(.gray)
-                        .padding()
-                        .onAppear(perform: viewModel.authenticate)
-                        .onTapGesture {
-                            viewModel.authenticate()
-                        }
+                    .listRowBackground(Color(UIColor.systemBackground))
+                    .listRowSeparator(.hidden)
                 }
+                .navigationDestination(for: Card.self, destination: { card in
+                    CardView(card: card)
+                })
+                .scrollIndicators(.hidden)
+                .listStyle(.plain)
+                .padding([.top], 20)
+                .scrollContentBackground(.hidden)
             }
             .navigationBarTitle("SafeWallet", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
@@ -71,11 +70,10 @@ struct CardListView: View {
                 AddCardView(viewModel: AddCardViewModel(context: viewContext))
                     .presentationDetents([.medium])
             }
-            .background(Color(UIColor.systemBackground))
+            .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
         }
     }
 }
-
 
 struct SearchBar: View {
     @Binding var text: String
@@ -121,7 +119,7 @@ struct CardRow: View {
 
     var body: some View {
         ZStack {
-            CardDetailsView(card: card)
+            CardDetailsView(card: card, isUnlocked: .constant(false))
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
             .cornerRadius(10)
             .shadow(radius: 5)
@@ -214,9 +212,7 @@ struct CardListView_Previews: PreviewProvider {
             print("Error fetching or saving mock cards: \(error)")
         }
 
-        let viewModel = CardListViewModel(context: context)
-        viewModel.isUnlocked = true
-        return CardListView(viewModel: viewModel)
+        return CardListView(viewModel: CardListViewModel(context: context))
             .environment(\.managedObjectContext, context)
     }
 }
