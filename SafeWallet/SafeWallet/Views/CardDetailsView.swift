@@ -46,6 +46,7 @@ struct CardDetailsView: View {
                     Text(cardName.uppercased())
                         .font(.headline)
                         .fontWeight(.bold)
+                        .textSelection(.enabled)
                 }
                 
             
@@ -73,6 +74,7 @@ struct CardDetailsView: View {
                         .fontWeight(.bold)
                         .lineLimit(1)
                         .layoutPriority(1)
+                        .textSelection(.enabled)
 
                     }
                 }
@@ -93,6 +95,7 @@ struct CardDetailsView: View {
                                     .font(.headline)
                                     .fontWeight(.bold)
                                     .redacted(reason: isUnlocked ? [] : .placeholder)
+                                    .textSelection(.enabled)
                             }
                         }
                     }
@@ -112,6 +115,7 @@ struct CardDetailsView: View {
                                 .font(.headline)
                                 .fontWeight(.bold)
                                 .redacted(reason: isUnlocked ? [] : .placeholder)
+                                .textSelection(.enabled)
                         }
                     }
                 }
