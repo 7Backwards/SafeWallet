@@ -26,7 +26,7 @@ struct CardListView: View {
                 List {
                     ForEach(cards.filter {
                         viewModel.searchText.isEmpty ||
-                        $0.cardNumber.contains(viewModel.searchText)
+                        $0.cardNumber.contains(viewModel.searchText) || $0.cardName.contains(viewModel.searchText)
                     }, id: \.self) { card in
                         Button {
                             viewModel.authenticate { result in
@@ -53,7 +53,7 @@ struct CardListView: View {
                     .listRowSeparator(.hidden)
                 }
                 .navigationDestination(for: Card.self, destination: { card in
-                    CardView(card: card)
+                    CardView(viewModel: CardViewModel(card: card))
                 })
                 .scrollIndicators(.hidden)
                 .listStyle(.plain)
@@ -68,7 +68,7 @@ struct CardListView: View {
             })
             .sheet(isPresented: $viewModel.showingAddCardView) {
                 AddCardView(viewModel: AddCardViewModel(context: viewContext))
-                    .presentationDetents([.medium])
+                    .presentationDetents([.height(UIScreen.main.bounds.height * 0.4)])
             }
             .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
         }

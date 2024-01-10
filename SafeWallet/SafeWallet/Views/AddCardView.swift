@@ -10,7 +10,6 @@ import SwiftUI
 struct AddCardView: View {
     @Environment(\.presentationMode) var presentationMode
     @State private var cardName: String = ""
-    @State private var holderName: String = ""
     @State private var cardNumber: String = ""
     @State private var expiryDate: String = ""
     @State private var cvvCode: String = ""
@@ -19,9 +18,6 @@ struct AddCardView: View {
     var body: some View {
         NavigationView {
             ScrollView {
-                Spacer()
-                Spacer()
-                Spacer()
                 VStack(spacing: 30) {
                     CardDetailsView(cardName: $cardName,
                                     cardNumber: $cardNumber,
@@ -29,7 +25,7 @@ struct AddCardView: View {
                                     cvvCode: $cvvCode)
                     .padding()
                     .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-                    .cornerRadius(10)
+                    .cornerRadius(20)
                     .shadow(radius: 5)
                     .padding(.horizontal)
                     
@@ -44,12 +40,15 @@ struct AddCardView: View {
                 }
             }
             .navigationBarTitle("Add Card", displayMode: .inline)
-            .navigationBarItems(trailing: Button("Cancel") {
+            .navigationBarItems(leading: Button(action: {
                 presentationMode.wrappedValue.dismiss()
+            }) {
+                Image(systemName: "xmark")
             })
         }
     }
 }
+
 
 
 // A placeholder Card object for preview purposes
