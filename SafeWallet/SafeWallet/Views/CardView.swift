@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct CardView: View {
-    var card: Card
     @Environment(\.presentationMode) var presentationMode
+    @StateObject var viewModel: CardViewModel
     
     var body: some View {
         VStack {
-            CardDetailsView(card: card, isUnlocked: .constant(true))
+            CardDetailsView(card: viewModel.card, isUnlocked: .constant(true))
                 .padding(.horizontal, 20)
                 .padding(.vertical, 20)
             
@@ -32,7 +32,7 @@ struct CardView: View {
                 .buttonStyle(RoundedButtonStyle())
                 
                 Button(action: {
-                    // Perform remove action
+                    viewModel.shouldShowDeleteConfirmation = true
                 }) {
                     Image(systemName: "trash.circle.fill")
                         .resizable()
@@ -43,7 +43,26 @@ struct CardView: View {
             }
             .padding(.horizontal, 20)
         }
-        .navigationBarTitle(card.cardName, displayMode: .inline)
+        .navigationBarTitle(viewModel.card.cardName, displayMode: .inline)
+        .alert(isPresented: $viewModel.shouldShowDeleteConfirmation) {
+            Alert(
+                title: Text("Delete Card"),
+                message: Text("Are you sure you want to delete this card?"),
+                primaryButton: .default(Text("Cancel"), action: { viewModel.shouldShowDeleteConfirmation = false }),
+                secondaryButton: .destructive(Text("Delete"), action: {
+                    withAnimation {
+                        viewModel.delete { result in
+                            if result {
+                                presentationMode.wrappedValue.dismiss()
+                            } else {
+                                print("Error deleting the card")
+                            }
+                        }
+                    }
+                    viewModel.shouldShowDeleteConfirmation = false
+                })
+            )
+        }
         .padding(.bottom, 20)
     }
 }
@@ -65,7 +84,8 @@ struct CardView_Previews: PreviewProvider {
         mockCard.expiryDate = "12/25"
         mockCard.cvvCode = "123"
         
-        return CardView(card: mockCard)
+        let cardViewModel = CardViewModel(card: mockCard)
+        return CardView(viewModel: cardViewModel)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .previewLayout(.sizeThatFits)
             .padding()
