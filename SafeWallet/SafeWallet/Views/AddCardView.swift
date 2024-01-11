@@ -17,26 +17,28 @@ struct AddCardView: View {
 
     var body: some View {
         NavigationView {
-            ScrollView {
-                VStack(spacing: 30) {
-                    CardDetailsView(cardName: $cardName,
-                                    cardNumber: $cardNumber,
-                                    expiryDate: $expiryDate,
-                                    cvvCode: $cvvCode)
-                    .padding()
-                    .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-                    .cornerRadius(20)
-                    .shadow(radius: 5)
-                    .padding(.horizontal)
-                    
-                    Button("Save Card") {
-                        viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode)
-                        presentationMode.wrappedValue.dismiss()
+            GeometryReader { geometry in
+                ScrollView {
+                    VStack(spacing: 30) {
+                        CardDetailsView(cardName: $cardName,
+                                        cardNumber: $cardNumber,
+                                        expiryDate: $expiryDate,
+                                        cvvCode: $cvvCode)
+                        .padding()
+                        .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+                        .cornerRadius(20)
+                        .shadow(radius: 5)
+                        .padding(.horizontal)
+                        
+                        Button("Save Card") {
+                            viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode)
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .frame(width: geometry.size.width - 60, height: 50)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
                     }
-                    .frame(width: UIScreen.main.bounds.width - 30, height: 50)
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
                 }
             }
             .navigationBarTitle("Add Card", displayMode: .inline)
