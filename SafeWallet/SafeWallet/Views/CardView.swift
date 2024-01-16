@@ -10,51 +10,68 @@ import SwiftUI
 struct CardView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: CardViewModel
+    @State private var autoLockTimer: Timer?
     
     var body: some View {
-        VStack {
-            CardDetailsView(card: viewModel.card, isUnlocked: .constant(true))
+        ZStack {
+            VStack {
+                CardDetailsView(card: viewModel.card, isUnlocked: .constant(true))
+                    .padding(.horizontal, 20)
+                    .padding(.vertical, 20)
+                    .onTapGesture {
+                        // User tapped the card details, so reset the auto-lock timer
+                        self.startAutoLockTimer()
+                    }
+                
+                Spacer()
+                
+                HStack(spacing: 30) {
+                    
+                    Button(action: {
+                        // Perform share action
+                    }) {
+                        Image(systemName: "square.and.arrow.up.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(RoundedButtonStyle())
+                    
+                    Button(action: {
+                        self.resetAutoLockTimer()
+                        viewModel.shouldShowDeleteConfirmation = true
+                    }) {
+                        Image(systemName: "trash.circle.fill")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 50, height: 50)
+                    }
+                    .buttonStyle(RoundedButtonStyle())
+                }
                 .padding(.horizontal, 20)
-                .padding(.vertical, 20)
-            
-            Spacer()
-            
-            HStack(spacing: 30) {
-                
-                Button(action: {
-                    // Perform share action
-                }) {
-                    Image(systemName: "square.and.arrow.up.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                }
-                .buttonStyle(RoundedButtonStyle())
-                
-                Button(action: {
-                    viewModel.shouldShowDeleteConfirmation = true
-                }) {
-                    Image(systemName: "trash.circle.fill")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 50, height: 50)
-                }
-                .buttonStyle(RoundedButtonStyle())
             }
-            .padding(.horizontal, 20)
+        }
+        .onAppear {
+            self.startAutoLockTimer()
+        }
+        .onDisappear {
+            self.resetAutoLockTimer()
         }
         .navigationBarTitle(viewModel.card.cardName, displayMode: .inline)
         .alert(isPresented: $viewModel.shouldShowDeleteConfirmation) {
             Alert(
                 title: Text("Delete Card"),
                 message: Text("Are you sure you want to delete this card?"),
-                primaryButton: .default(Text("Cancel"), action: { viewModel.shouldShowDeleteConfirmation = false }),
+                primaryButton: .default(Text("Cancel"), action: {
+                    self.startAutoLockTimer()
+                    viewModel.shouldShowDeleteConfirmation = false }),
                 secondaryButton: .destructive(Text("Delete"), action: {
                     withAnimation {
                         viewModel.delete { result in
                             if result {
                                 presentationMode.wrappedValue.dismiss()
                             } else {
+                                self.startAutoLockTimer()
                                 print("Error deleting the card")
                             }
                         }
@@ -89,5 +106,19 @@ struct CardView_Previews: PreviewProvider {
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .previewLayout(.sizeThatFits)
             .padding()
+    }
+}
+
+// Auto-lock Funcionality
+extension CardView {
+    private func startAutoLockTimer() {
+        resetAutoLockTimer()
+        self.autoLockTimer = Timer.scheduledTimer(withTimeInterval: 30, repeats: false) { _ in
+            self.presentationMode.wrappedValue.dismiss()
+        }
+    }
+    
+    private func resetAutoLockTimer() {
+        autoLockTimer?.invalidate()
     }
 }

@@ -16,6 +16,7 @@ struct CardDetailsView: View {
     @Binding var cvvCode: String
     @Binding var isUnlocked: Bool
     @StateObject var viewModel = CardDetailsViewModel()
+
     var isEditable: Bool
 
     init(cardName: Binding<String>, cardNumber: Binding<String>, expiryDate: Binding<String>, cvvCode: Binding<String>) {
