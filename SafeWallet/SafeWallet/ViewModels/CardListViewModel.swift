@@ -12,21 +12,16 @@ import SwiftUI
 class CardListViewModel: ObservableObject {
     @Published var searchText = ""
     @Published var showingAddCardView = false
-    private var viewContext: NSManagedObjectContext
+    @Published var appManager: AppManager
     
-    init(context: NSManagedObjectContext) {
-        self.viewContext = context
+    init(appManager: AppManager) {
+        self.appManager = appManager
     }
     
-    func deleteCards(at offsets: IndexSet, from cards: FetchedResults<Card>) {
+    func deleteCards(at offsets: IndexSet, from cards: [Card], completion: @escaping (Bool) -> Void) {
         withAnimation {
-            offsets.map { cards[$0] }.forEach(viewContext.delete)
-            do {
-                try viewContext.save()
-            } catch {
-                // Handle the error appropriately
-                print("Error when trying to delete card: \(error)")
-            }
+            let cardsToDelete = offsets.map { cards[$0] }
+            appManager.actionManager.doAction(action: .removeCards(cardsToDelete), completion: completion)
         }
     }
     
@@ -38,5 +33,9 @@ class CardListViewModel: ObservableObject {
                 completion(false)
             }
         }
+    }
+    
+    func refreshView() {
+        objectWillChange.send()
     }
 }

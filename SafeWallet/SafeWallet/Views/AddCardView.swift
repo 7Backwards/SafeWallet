@@ -68,6 +68,6 @@ extension Card {
 struct AddCardView_Previews: PreviewProvider {
     static var previews: some View {
         let context = PersistenceController.preview.container.viewContext
-        AddCardView(viewModel: AddCardViewModel(context: context))
+        AddCardView(viewModel: AddCardViewModel(appManager: AppManager(context: context)))
     }
 }
