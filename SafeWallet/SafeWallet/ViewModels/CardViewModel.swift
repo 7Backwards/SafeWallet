@@ -9,25 +9,15 @@ import SwiftUI
 
 class CardViewModel: ObservableObject {
     var card: Card
+    @Published var appManager: AppManager
     @Published var shouldShowDeleteConfirmation: Bool = false
     
-    init(card: Card) {
+    init(card: Card, appManager: AppManager) {
         self.card = card
+        self.appManager = appManager
     }
 
-    func delete(completion: (Bool) -> Void ) {
-        guard let context = card.managedObjectContext else {
-            return
-        }
-        
-        context.delete(card)
-        
-        do {
-            try context.save()
-            completion(true)
-        } catch {
-            completion(false)
-            print("Error saving context after deleting card: \(error)")
-        }
+    func delete(completion: @escaping (Bool) -> Void ) {
+        appManager.actionManager.doAction(action: .removeCard(card), completion: completion)
     }
 }

@@ -101,7 +101,7 @@ struct CardView_Previews: PreviewProvider {
         mockCard.expiryDate = "12/25"
         mockCard.cvvCode = "123"
         
-        let cardViewModel = CardViewModel(card: mockCard)
+        let cardViewModel = CardViewModel(card: mockCard, appManager: AppManager(context: PersistenceController.preview.container.viewContext))
         return CardView(viewModel: cardViewModel)
             .environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
             .previewLayout(.sizeThatFits)

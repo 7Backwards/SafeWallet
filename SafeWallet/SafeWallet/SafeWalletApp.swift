@@ -13,7 +13,8 @@ struct SafeWalletApp: App {
 
     var body: some Scene {
         WindowGroup {
-            CardListView(viewModel: CardListViewModel(context: viewContext))
+            let appManager = AppManager(context: viewContext)
+            CardListView(viewModel: CardListViewModel(appManager: appManager))
                 .environment(\.managedObjectContext, viewContext)
         }
     }

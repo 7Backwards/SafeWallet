@@ -12,10 +12,6 @@ struct CardListView: View {
     @Environment(\.managedObjectContext) private var viewContext
     @StateObject var viewModel: CardListViewModel
     @State private var path = NavigationPath()
-    @FetchRequest(
-        sortDescriptors: [NSSortDescriptor(keyPath: \Card.cardName, ascending: true)],
-        animation: .default)
-    var cards: FetchedResults<Card>
     
     var body: some View {
         NavigationStack(path: $path) {
@@ -24,7 +20,7 @@ struct CardListView: View {
                     .background(Color(UIColor.systemBackground))
                 
                 List {
-                    ForEach(cards.filter {
+                    ForEach(viewModel.appManager.store.cards.filter {
                         viewModel.searchText.isEmpty ||
                         $0.cardNumber.contains(viewModel.searchText) || $0.cardName.contains(viewModel.searchText)
                     }, id: \.self) { card in
@@ -36,9 +32,11 @@ struct CardListView: View {
                             }
                         } label: {
                             CardRow(card: card, onDelete: {
-                                if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                                if let index = viewModel.appManager.store.cards.firstIndex(where: { $0.id == card.id }) {
                                     print("Deleting card at index: \(index)")
-                                    viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
+                                    viewModel.deleteCards(at: IndexSet(integer: index), from: viewModel.appManager.store.cards) { _ in
+                                        self.viewModel.refreshView()
+                                    }
                                 } else {
                                     print("Failed to find index for card")
                                 }
@@ -53,7 +51,10 @@ struct CardListView: View {
                     .listRowSeparator(.hidden)
                 }
                 .navigationDestination(for: Card.self, destination: { card in
-                    CardView(viewModel: CardViewModel(card: card))
+                    CardView(viewModel: CardViewModel(card: card, appManager: viewModel.appManager))
+                        .onDisappear(perform: {
+                            viewModel.refreshView()
+                        })
                 })
                 .scrollIndicators(.hidden)
                 .listStyle(.plain)
@@ -67,7 +68,7 @@ struct CardListView: View {
                 Image(systemName: "plus.circle")
             })
             .sheet(isPresented: $viewModel.showingAddCardView) {
-                AddCardView(viewModel: AddCardViewModel(context: viewContext))
+                AddCardView(viewModel: AddCardViewModel(appManager: viewModel.appManager))
                     .presentationDetents([.height(UIScreen.main.bounds.height * 0.4)])
             }
             .background(Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all))
@@ -212,7 +213,7 @@ struct CardListView_Previews: PreviewProvider {
             print("Error fetching or saving mock cards: \(error)")
         }
 
-        return CardListView(viewModel: CardListViewModel(context: context))
+        return CardListView(viewModel: CardListViewModel(appManager: AppManager(context: context)))
             .environment(\.managedObjectContext, context)
     }
 }
