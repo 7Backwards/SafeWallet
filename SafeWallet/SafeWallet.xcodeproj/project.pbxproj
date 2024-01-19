@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5926C5B42B59BBE30065030E /* AppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5B32B59BBE30065030E /* AppManager.swift */; };
 		5926C5B62B59BCFB0065030E /* AppActionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5B52B59BCFB0065030E /* AppActionManager.swift */; };
-		5926C5B82B59C0050065030E /* AppStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5B72B59C0050065030E /* AppStore.swift */; };
 		598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */; };
 		598C2F022B34C66200C291C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F012B34C66200C291C3 /* Persistence.swift */; };
 		598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F032B34C66200C291C3 /* SafeWallet.xcdatamodeld */; };
@@ -51,7 +50,6 @@
 /* Begin PBXFileReference section */
 		5926C5B32B59BBE30065030E /* AppManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppManager.swift; sourceTree = "<group>"; };
 		5926C5B52B59BCFB0065030E /* AppActionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppActionManager.swift; sourceTree = "<group>"; };
-		5926C5B72B59C0050065030E /* AppStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStore.swift; sourceTree = "<group>"; };
 		598C2EFC2B34C66200C291C3 /* SafeWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletApp.swift; sourceTree = "<group>"; };
 		598C2F012B34C66200C291C3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -108,7 +106,6 @@
 			children = (
 				5926C5B32B59BBE30065030E /* AppManager.swift */,
 				5926C5B52B59BCFB0065030E /* AppActionManager.swift */,
-				5926C5B72B59C0050065030E /* AppStore.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -346,7 +343,6 @@
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
 				5926C5B42B59BBE30065030E /* AppManager.swift in Sources */,
 				598D18C32B4C8E8000D88C08 /* CardViewModel.swift in Sources */,
-				5926C5B82B59C0050065030E /* AppStore.swift in Sources */,
 				59DFA1A12B3DCD5000EFD403 /* BiometricAuth.swift in Sources */,
 				598D18C12B4C72B900D88C08 /* CardView.swift in Sources */,
 				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
