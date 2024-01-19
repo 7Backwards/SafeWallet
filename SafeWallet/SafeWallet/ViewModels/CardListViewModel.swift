@@ -18,10 +18,10 @@ class CardListViewModel: ObservableObject {
         self.appManager = appManager
     }
     
-    func deleteCards(at offsets: IndexSet, from cards: [Card], completion: @escaping (Bool) -> Void) {
+    func deleteCards(at offsets: IndexSet, from cards: FetchedResults<Card>) {
         withAnimation {
             let cardsToDelete = offsets.map { cards[$0] }
-            appManager.actionManager.doAction(action: .removeCards(cardsToDelete), completion: completion)
+            appManager.actionManager.doAction(action: .removeCards(cardsToDelete))
         }
     }
     
@@ -33,9 +33,5 @@ class CardListViewModel: ObservableObject {
                 completion(false)
             }
         }
-    }
-    
-    func refreshView() {
-        objectWillChange.send()
     }
 }
