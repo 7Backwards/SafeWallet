@@ -20,51 +20,58 @@ struct CardListView: View {
     var body: some View {
         NavigationStack(path: $path) {
             VStack(spacing: 0) {
-                SearchBar(text: $viewModel.searchText)
-                    .background(Color(UIColor.systemBackground))
-                
-                List {
-                    ForEach(cards.filter {
-                        viewModel.searchText.isEmpty ||
-                        $0.cardNumber.contains(viewModel.searchText) || $0.cardName.contains(viewModel.searchText)
-                    }, id: \.self) { card in
-                        Button {
-                            viewModel.authenticate { result in
-                                if result {
-                                    path.append(card)
-                                }
-                            }
-                        } label: {
-                            CardRow(card: card, onDelete: {
-                                if let index = cards.firstIndex(where: { $0.id == card.id }) {
-                                    print("Deleting card at index: \(index)")
-                                    viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
-                                } else {
-                                    print("Failed to find index for card")
-                                }
-                            })
-                            
-                            .padding([.horizontal], 5)
-                            .padding([.vertical], 10)
-                            .listRowInsets(EdgeInsets())
-                        }
-                    }
-                    .listRowBackground(Color(UIColor.systemBackground))
-                    .listRowSeparator(.hidden)
+                if !cards.isEmpty {
+                    SearchBar(text: $viewModel.searchText)
+                        .background(Color(UIColor.systemBackground))
                 }
-                .navigationDestination(for: Card.self, destination: { card in
-                    CardView(viewModel: CardViewModel(card: card, appManager: viewModel.appManager))
-                })
-                .scrollIndicators(.hidden)
-                .listStyle(.plain)
-                .padding([.top], 20)
-                .scrollContentBackground(.hidden)
+                
+                ZStack {
+                    if cards.isEmpty {
+                        NoContentView()
+                    }
+                    List {
+                        ForEach(cards.filter {
+                            viewModel.searchText.isEmpty ||
+                            $0.cardNumber.contains(viewModel.searchText) || $0.cardName.contains(viewModel.searchText)
+                        }, id: \.self) { card in
+                            Button {
+                                viewModel.authenticate { result in
+                                    if result {
+                                        path.append(card)
+                                    }
+                                }
+                            } label: {
+                                CardRow(card: card, onDelete: {
+                                    if let index = cards.firstIndex(where: { $0.id == card.id }) {
+                                        print("Deleting card at index: \(index)")
+                                        viewModel.deleteCards(at: IndexSet(integer: index), from: cards)
+                                    } else {
+                                        print("Failed to find index for card")
+                                    }
+                                })
+                                
+                                .padding([.horizontal], 5)
+                                .padding([.vertical], 10)
+                                .listRowInsets(EdgeInsets())
+                            }
+                        }
+                        .listRowBackground(Color(UIColor.systemBackground))
+                        .listRowSeparator(.hidden)
+                    }
+                    .navigationDestination(for: Card.self, destination: { card in
+                        CardView(viewModel: CardViewModel(card: card, appManager: viewModel.appManager))
+                    })
+                    .scrollIndicators(.hidden)
+                    .listStyle(.plain)
+                    .padding([.top], 20)
+                    .scrollContentBackground(.hidden)
+                }
             }
             .navigationBarTitle("SafeWallet", displayMode: .large)
             .navigationBarItems(trailing: Button(action: {
                 viewModel.showingAddCardView = true
             }) {
-                Image(systemName: "plus.circle")
+                Image(.addCard)
             })
             .sheet(isPresented: $viewModel.showingAddCardView) {
                 AddCardView(viewModel: AddCardViewModel(appManager: viewModel.appManager))
@@ -74,6 +81,26 @@ struct CardListView: View {
         }
     }
 }
+
+struct NoContentView: View {
+    var body: some View {
+        VStack(spacing: 20) { // Add spacing between elements
+            Spacer() // Push content to center
+            Image(systemName: "creditcard.fill") // Use a system image
+                .resizable()
+                .scaledToFit()
+                .frame(width: 100, height: 60) // Set image size
+                .foregroundColor(.secondary) // Set image color to secondary text color
+            Text("You currently have no cards")
+                .font(.title) // Make the font larger
+                .fontWeight(.semibold) // Make the text bold
+                .foregroundColor(.secondary) // Set text color to secondary
+            Spacer() // Push content to center
+        }
+        .padding() // Add padding around the VStack
+    }
+}
+
 
 struct SearchBar: View {
     @Binding var text: String
