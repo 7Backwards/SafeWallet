@@ -48,7 +48,7 @@ struct CardListView: View {
                                     } else {
                                         print("Failed to find index for card")
                                     }
-                                })
+                                }, appManager: viewModel.appManager)
                                 
                                 .padding([.horizontal], 5)
                                 .padding([.vertical], 10)
@@ -143,10 +143,11 @@ struct CardRow: View {
     @GestureState private var gestureDragOffset = CGSize.zero
     @State private var dragOffset = CGSize.zero
     @State private var shouldShowDeleteConfirmation = false
+    @StateObject var appManager: AppManager
 
     var body: some View {
         ZStack {
-            CardDetailsView(card: card, isUnlocked: .constant(false))
+            CardDetailsView(viewModel: CardDetailsViewModel(appManager: appManager), card: card, isUnlocked: .constant(false))
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
             .cornerRadius(10)
             .shadow(radius: 5)

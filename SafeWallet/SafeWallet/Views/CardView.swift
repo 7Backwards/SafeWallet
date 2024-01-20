@@ -11,17 +11,25 @@ struct CardView: View {
     @Environment(\.presentationMode) var presentationMode
     @StateObject var viewModel: CardViewModel
     @State private var autoLockTimer: Timer?
-    
+    @State private var cardColor: String
+
+    init(viewModel: CardViewModel) {
+        _viewModel = StateObject(wrappedValue: viewModel)
+        _cardColor = State(wrappedValue: viewModel.card.cardColor)
+    }
+
     var body: some View {
         ZStack {
             VStack {
-                CardDetailsView(card: viewModel.card, isUnlocked: .constant(true))
+                CardDetailsView(viewModel: CardDetailsViewModel(appManager: viewModel.appManager), card: viewModel.card, isUnlocked: .constant(true), cardColor: $cardColor)
                     .padding(.horizontal, 20)
                     .padding(.vertical, 20)
                     .onTapGesture {
                         // User tapped the card details, so reset the auto-lock timer
                         self.startAutoLockTimer()
                     }
+                
+                ColorCarouselView(cardColor: $cardColor, viewModel: ColorCarouselViewModel(appManager: viewModel.appManager))
                 
                 Spacer()
                 
@@ -56,6 +64,7 @@ struct CardView: View {
         }
         .onDisappear {
             self.resetAutoLockTimer()
+            self.viewModel.updateCardColor(cardColor: cardColor)
         }
         .navigationBarTitle(viewModel.card.cardName, displayMode: .inline)
         .alert(isPresented: $viewModel.shouldShowDeleteConfirmation) {

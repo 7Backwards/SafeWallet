@@ -19,6 +19,7 @@ extension Card {
     @NSManaged public var cardNumber: String
     @NSManaged public var expiryDate: String
     @NSManaged public var cvvCode: String
+    @NSManaged public var cardColor: String
 }
 
 extension Card : Identifiable {}

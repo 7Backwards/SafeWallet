@@ -14,26 +14,42 @@ struct CardDetailsView: View {
     @Binding var cardNumber: String
     @Binding var expiryDate: String
     @Binding var cvvCode: String
+    @Binding var cardColor: String
     @Binding var isUnlocked: Bool
-    @StateObject var viewModel = CardDetailsViewModel()
+    @StateObject var viewModel: CardDetailsViewModel
 
     var isEditable: Bool
 
-    init(cardName: Binding<String>, cardNumber: Binding<String>, expiryDate: Binding<String>, cvvCode: Binding<String>) {
+    init(viewModel: CardDetailsViewModel, cardName: Binding<String>, cardNumber: Binding<String>, expiryDate: Binding<String>, cvvCode: Binding<String>, cardColor: Binding<String>) {
         self._cardName = cardName
         self._cardNumber = cardNumber
         self._expiryDate = expiryDate
         self._cvvCode = cvvCode
+        self._cardColor = cardColor
+        self._viewModel = StateObject(wrappedValue: viewModel)
         self._isUnlocked = .constant(true)
         isEditable = true
     }
     
-    init(card: Card, isUnlocked: Binding<Bool>) {
+    init(viewModel: CardDetailsViewModel, card: Card, isUnlocked: Binding<Bool>) {
         self._cardName = .constant(card.cardName)
         self._cardNumber = .constant(card.cardNumber)
         self._expiryDate = .constant(card.expiryDate)
         self._cvvCode = .constant(card.cvvCode)
+        self._cardColor = .constant(card.cardColor)
         self._isUnlocked = isUnlocked
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self.isEditable = false
+    }
+    
+    init(viewModel: CardDetailsViewModel, card: Card, isUnlocked: Binding<Bool>, cardColor: Binding<String>) {
+        self._cardName = .constant(card.cardName)
+        self._cardNumber = .constant(card.cardNumber)
+        self._expiryDate = .constant(card.expiryDate)
+        self._cvvCode = .constant(card.cvvCode)
+        self._cardColor = cardColor
+        self._isUnlocked = isUnlocked
+        self._viewModel = StateObject(wrappedValue: viewModel)
         self.isEditable = false
     }
 
@@ -122,7 +138,7 @@ struct CardDetailsView: View {
                 }
             }
             .padding()
-            .background(Color(.systemBackground))
+            .background(Color(wordName: cardColor) ?? .clear).opacity(viewModel.getCardBackgroundOpacity())
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)

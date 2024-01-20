@@ -9,6 +9,12 @@ import Foundation
 import SwiftUI
 
 class CardDetailsViewModel: ObservableObject {
+    @Published var appManager: AppManager
+    
+    init(appManager: AppManager) {
+        self.appManager = appManager
+    }
+
     func formatCardNumber(_ number: String) -> String {
         // First, filter out any non-numeric characters
         let filtered = number.filter { "0123456789".contains($0) }
@@ -36,5 +42,9 @@ class CardDetailsViewModel: ObservableObject {
         } else {
             return nil
         }
+    }
+    
+    func getCardBackgroundOpacity() -> Double {
+        appManager.constants.cardBackgroundOpacity
     }
 }
