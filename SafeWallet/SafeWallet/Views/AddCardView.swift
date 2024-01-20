@@ -13,25 +13,31 @@ struct AddCardView: View {
     @State private var cardNumber: String = ""
     @State private var expiryDate: String = ""
     @State private var cvvCode: String = ""
+    @State private var cardColor: String = "systemBackground"
     @StateObject var viewModel: AddCardViewModel
-
+    
     var body: some View {
         NavigationView {
             GeometryReader { geometry in
                 ScrollView {
-                    VStack(spacing: 30) {
-                        CardDetailsView(cardName: $cardName,
+                    VStack(spacing: 20) {
+                        CardDetailsView(
+                                        viewModel: CardDetailsViewModel(appManager: viewModel.appManager),
+                                        cardName: $cardName,
                                         cardNumber: $cardNumber,
                                         expiryDate: $expiryDate,
-                                        cvvCode: $cvvCode)
+                                        cvvCode: $cvvCode,
+                                        cardColor: $cardColor)
                         .padding()
                         .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
                         .cornerRadius(20)
                         .shadow(radius: 5)
                         .padding(.horizontal)
                         
+                        ColorCarouselView(cardColor: $cardColor, viewModel: ColorCarouselViewModel(appManager: viewModel.appManager))
+                        
                         Button("Save Card") {
-                            viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode)
+                            viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode, cardColor: cardColor)
                             presentationMode.wrappedValue.dismiss()
                         }
                         .frame(width: geometry.size.width - 60, height: 50)

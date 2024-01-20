@@ -8,9 +8,10 @@
 import CoreData
 
 enum AppAction {
-    case addCard(cardName: String, cardNumber: String, expiryDate: String, cvvCode: String)
+    case addCard(cardName: String, cardNumber: String, expiryDate: String, cvvCode: String, cardColor: String)
     case removeCard(Card)
     case removeCards([Card])
+    case changeCardColor(Card, String)
 }
 
 class AppActionManager {
@@ -31,12 +32,13 @@ class AppActionManager {
         }
 
         switch action {
-        case .addCard(let cardName, let cardNumber, let expiryDate, let cvvCode):
+        case .addCard(let cardName, let cardNumber, let expiryDate, let cvvCode, let cardColor):
             let card = Card(context: context)
             card.cardNumber = cardNumber
             card.expiryDate = expiryDate
             card.cvvCode = cvvCode
             card.cardName = cardName
+            card.cardColor = cardColor
             saveWithCompletion()
         case .removeCard(let card):
             context.delete(card)
@@ -45,6 +47,9 @@ class AppActionManager {
             cards.forEach {
                 context.delete($0)
             }
+            saveWithCompletion()
+        case .changeCardColor(let card, let newCardColor):
+            card.cardColor = newCardColor
             saveWithCompletion()
         }
         
