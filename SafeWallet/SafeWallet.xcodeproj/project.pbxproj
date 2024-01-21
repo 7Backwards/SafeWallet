@@ -12,6 +12,8 @@
 		5926C5BB2B5C2FE60065030E /* Color+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5BA2B5C2FE60065030E /* Color+Extension.swift */; };
 		5926C5BD2B5C44910065030E /* ColorCarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5BC2B5C44910065030E /* ColorCarouselView.swift */; };
 		5926C5BF2B5C8E8B0065030E /* ColorCarouselViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5BE2B5C8E8B0065030E /* ColorCarouselViewModel.swift */; };
+		5926C5C12B5C921F0065030E /* AppUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5C02B5C921F0065030E /* AppUtils.swift */; };
+		5926C5C32B5C96FE0065030E /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5926C5C22B5C96FE0065030E /* AppConstants.swift */; };
 		598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */; };
 		598C2F022B34C66200C291C3 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F012B34C66200C291C3 /* Persistence.swift */; };
 		598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 598C2F032B34C66200C291C3 /* SafeWallet.xcdatamodeld */; };
@@ -56,6 +58,8 @@
 		5926C5BA2B5C2FE60065030E /* Color+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Color+Extension.swift"; sourceTree = "<group>"; };
 		5926C5BC2B5C44910065030E /* ColorCarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCarouselView.swift; sourceTree = "<group>"; };
 		5926C5BE2B5C8E8B0065030E /* ColorCarouselViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorCarouselViewModel.swift; sourceTree = "<group>"; };
+		5926C5C02B5C921F0065030E /* AppUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUtils.swift; sourceTree = "<group>"; };
+		5926C5C22B5C96FE0065030E /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
 		598C2EFC2B34C66200C291C3 /* SafeWallet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeWallet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		598C2EFF2B34C66200C291C3 /* SafeWalletApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeWalletApp.swift; sourceTree = "<group>"; };
 		598C2F012B34C66200C291C3 /* Persistence.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
@@ -112,6 +116,8 @@
 			children = (
 				5926C5B32B59BBE30065030E /* AppManager.swift */,
 				5926C5B52B59BCFB0065030E /* AppActionManager.swift */,
+				5926C5C02B5C921F0065030E /* AppUtils.swift */,
+				5926C5C22B5C96FE0065030E /* AppConstants.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -356,6 +362,7 @@
 				598C2F432B37421A00C291C3 /* CardListViewModel.swift in Sources */,
 				598C2F002B34C66200C291C3 /* SafeWalletApp.swift in Sources */,
 				598C2F3A2B34D44000C291C3 /* Card+CoreDataClass.swift in Sources */,
+				5926C5C32B5C96FE0065030E /* AppConstants.swift in Sources */,
 				598C2F052B34C66200C291C3 /* SafeWallet.xcdatamodeld in Sources */,
 				598C2F3B2B34D44000C291C3 /* Card+CoreDataProperties.swift in Sources */,
 				5926C5B42B59BBE30065030E /* AppManager.swift in Sources */,
@@ -367,6 +374,7 @@
 				598C2F072B34C66200C291C3 /* CardListView.swift in Sources */,
 				5926C5B62B59BCFB0065030E /* AppActionManager.swift in Sources */,
 				59DFA19F2B3B6FD000EFD403 /* CardDetailsViewModel.swift in Sources */,
+				5926C5C12B5C921F0065030E /* AppUtils.swift in Sources */,
 				598C2F452B37BB1C00C291C3 /* CardDetailsView.swift in Sources */,
 				5926C5BB2B5C2FE60065030E /* Color+Extension.swift in Sources */,
 				598C2F022B34C66200C291C3 /* Persistence.swift in Sources */,
