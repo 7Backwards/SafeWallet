@@ -21,13 +21,3 @@ class AppManager: ObservableObject {
     }
 }
 
-class AppConstants: ObservableObject {
-    let cardBackgroundOpacity = 0.75
-}
-
-class AppUtils {
-    
-}
-
-
-

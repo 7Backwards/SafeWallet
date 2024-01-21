@@ -58,7 +58,6 @@ struct CardDetailsView: View {
             VStack(alignment: .leading, spacing: 15) {
                 if isEditable {
                     TextField("Name", text: $cardName)
-                        .font(.headline)
                 } else {
                     Text(cardName.uppercased())
                         .font(.headline)
@@ -70,7 +69,8 @@ struct CardDetailsView: View {
                 VStack(alignment: .leading) {
                     if isEditable {
                         TextField("Number", text: $cardNumber)
-                            .font(.title2)
+                            .font(cardNumber.isEmpty ? .body : .title3)
+                            .fontWeight(cardNumber.isEmpty ? .none : .bold)
                             .keyboardType(.numberPad)
                             .frame(width: UIScreen.main.bounds.width * 0.58)
                             .onChange(of: cardNumber, initial: true) { oldValue, newValue in
@@ -99,7 +99,6 @@ struct CardDetailsView: View {
                 HStack {
                     if isEditable {
                         TextField("CVV", text: $cvvCode)
-                            .font(.footnote)
                             .keyboardType(.numberPad)
                             .frame(width: UIScreen.main.bounds.width * 0.55)
                     } else {
@@ -123,7 +122,6 @@ struct CardDetailsView: View {
                     VStack(alignment: .trailing) {
                         if isEditable {
                             TextField("Expires", text: $expiryDate)
-                                .font(.headline)
                         } else {
                             Text("Expires on")
                                 .font(.caption)
@@ -138,7 +136,7 @@ struct CardDetailsView: View {
                 }
             }
             .padding()
-            .background(Color(wordName: cardColor) ?? .clear).opacity(viewModel.getCardBackgroundOpacity())
+            .background(Color(wordName: cardColor).opacity(viewModel.getCardBackgroundOpacity()))
             .cornerRadius(10)
             .overlay(
                 RoundedRectangle(cornerRadius: 10)
