@@ -16,20 +16,19 @@ struct CardListView: View {
         sortDescriptors: [NSSortDescriptor(keyPath: \Card.cardName, ascending: true)],
         animation: .default)
     var cards: FetchedResults<Card>
-
+    
     var body: some View {
         NavigationStack(path: $path) {
-            VStack(spacing: 0) {
-                if !cards.isEmpty {
+            ScrollView {
+                VStack {
                     SearchBar(text: $viewModel.searchText)
                         .background(Color(UIColor.systemBackground))
-                }
-                
-                ZStack {
                     if cards.isEmpty {
                         NoContentView()
-                    }
-                    List {
+                    } else {
+                        if !cards.isEmpty {
+                            
+                        }
                         ForEach(cards.filter {
                             viewModel.searchText.isEmpty ||
                             $0.cardNumber.contains(viewModel.searchText) || $0.cardName.contains(viewModel.searchText)
@@ -49,25 +48,22 @@ struct CardListView: View {
                                         print("Failed to find index for card")
                                     }
                                 }, appManager: viewModel.appManager)
-                                
-                                .padding([.horizontal], 5)
                                 .padding([.vertical], 10)
                                 .listRowInsets(EdgeInsets())
                             }
+                            .foregroundColor(.inverseSystemBackground)
                         }
-                        .listRowBackground(Color(UIColor.systemBackground))
-                        .listRowSeparator(.hidden)
                     }
-                    .navigationDestination(for: Card.self, destination: { card in
-                        CardView(viewModel: CardViewModel(card: card, appManager: viewModel.appManager))
-                    })
-                    .scrollIndicators(.hidden)
-                    .listStyle(.plain)
-                    .padding([.top], 20)
-                    .scrollContentBackground(.hidden)
                 }
+                .padding()
             }
-            .navigationBarTitle("SafeWallet", displayMode: .large)
+            .navigationDestination(for: Card.self, destination: { card in
+                CardView(viewModel: CardViewModel(card: card, appManager: viewModel.appManager))
+            })
+            .scrollIndicators(.hidden)
+            .listStyle(.plain)
+            .scrollContentBackground(.hidden)
+            .navigationBarTitle("SafeWallet", displayMode: .automatic)
             .navigationBarItems(trailing: Button(action: {
                 viewModel.showingAddCardView = true
             }) {
@@ -104,7 +100,7 @@ struct NoContentView: View {
 
 struct SearchBar: View {
     @Binding var text: String
-
+    
     var body: some View {
         HStack {
             TextField("Search", text: $text)
@@ -130,62 +126,60 @@ struct SearchBar: View {
                         }
                     }
                 )
-                .padding(.horizontal, 10)
         }
-        .padding(.horizontal)
     }
 }
 
 struct CardRow: View {
     var card: Card
     var onDelete: () -> Void
-
+    
     @GestureState private var gestureDragOffset = CGSize.zero
     @State private var dragOffset = CGSize.zero
     @State private var shouldShowDeleteConfirmation = false
     @StateObject var appManager: AppManager
-
+    
     var body: some View {
         ZStack {
             CardDetailsView(viewModel: CardDetailsViewModel(appManager: appManager), card: card, isUnlocked: .constant(false))
-            .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
-            .cornerRadius(10)
-            .shadow(radius: 5)
-            .offset(x: dragOffset.width + gestureDragOffset.width)
-            .gesture(
-                DragGesture(minimumDistance: 30)
-                    .updating($gestureDragOffset, body: { (value, state, _) in
-                        let translationX = value.translation.width
-                        if translationX < 0, translationX > -70 {
-                            state = CGSize(width: translationX, height: 0)
-                        }
-                    })
-                    .onEnded { value in
-                        if value.translation.width < 0 {
-                            if value.translation.width <= -50 {
-                                withAnimation {
-                                    dragOffset = .zero
-                                    shouldShowDeleteConfirmation = true
+                .frame(minWidth: 0, maxWidth: .infinity, minHeight: 100)
+                .cornerRadius(10)
+                .shadow(radius: 5)
+                .offset(x: dragOffset.width + gestureDragOffset.width)
+                .gesture(
+                    DragGesture(minimumDistance: 30)
+                        .updating($gestureDragOffset, body: { (value, state, _) in
+                            let translationX = value.translation.width
+                            if translationX < 0, translationX > -70 {
+                                state = CGSize(width: translationX, height: 0)
+                            }
+                        })
+                        .onEnded { value in
+                            if value.translation.width < 0 {
+                                if value.translation.width <= -50 {
+                                    withAnimation {
+                                        dragOffset = .zero
+                                        shouldShowDeleteConfirmation = true
+                                    }
                                 }
                             }
                         }
-                    }
-            )
-
-            .alert(isPresented: $shouldShowDeleteConfirmation) {
-                Alert(
-                    title: Text("Delete Card"),
-                    message: Text("Are you sure you want to delete this card?"),
-                    primaryButton: .default(Text("Cancel"), action: { shouldShowDeleteConfirmation = false }),
-                    secondaryButton: .destructive(Text("Delete"), action: {
-                        withAnimation {
-                            onDelete()
-                        }
-                        shouldShowDeleteConfirmation = false
-                    })
                 )
-            }
-
+            
+                .alert(isPresented: $shouldShowDeleteConfirmation) {
+                    Alert(
+                        title: Text("Delete Card"),
+                        message: Text("Are you sure you want to delete this card?"),
+                        primaryButton: .default(Text("Cancel"), action: { shouldShowDeleteConfirmation = false }),
+                        secondaryButton: .destructive(Text("Delete"), action: {
+                            withAnimation {
+                                onDelete()
+                            }
+                            shouldShowDeleteConfirmation = false
+                        })
+                    )
+                }
+            
             // Swipe to delete overlay
             if gestureDragOffset.width < -10 {
                 HStack {
@@ -226,7 +220,7 @@ struct CardListView_Previews: PreviewProvider {
                     "Visa", "MasterCard", "Amex", "Discover", "UnionPay",
                     "JCB", "Maestro", "Visa Electron", "Mir", "Troy"
                 ]
-
+                
                 for i in 0..<cardNumbers.count {
                     let newCard = Card(context: context)
                     newCard.cardNumber = cardNumbers[i]
@@ -239,7 +233,7 @@ struct CardListView_Previews: PreviewProvider {
         } catch {
             print("Error fetching or saving mock cards: \(error)")
         }
-
+        
         return CardListView(viewModel: CardListViewModel(appManager: AppManager(context: context)))
             .environment(\.managedObjectContext, context)
     }

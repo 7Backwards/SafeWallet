@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="22G91" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="Card" representedClassName="Card" syncable="YES">
-        <attribute name="cardColor" optional="YES" attributeType="String"/>
+        <attribute name="cardColor" optional="YES" attributeType="String" defaultValueString="systemBackground"/>
         <attribute name="cardName" attributeType="String"/>
         <attribute name="cardNumber" attributeType="String"/>
         <attribute name="cvvCode" attributeType="String"/>
