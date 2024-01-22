@@ -155,3 +155,28 @@ struct CardDetailsView: View {
         }
     }
 }
+
+struct CardDetailsView_Previews: PreviewProvider {
+    static var previews: some View {
+        let context = PersistenceController.preview.container.viewContext
+        
+        let viewModel = CardDetailsViewModel(appManager: AppManager(context: context))
+        
+        // Binding variables for the preview
+        let bindingCardName = Binding.constant("Visa")
+        let bindingCardNumber = Binding.constant("4234 5678 0000 1111")
+        let bindingExpiryDate = Binding.constant("12/25")
+        let bindingCvvCode = Binding.constant("123")
+        let bindingCardColor = Binding.constant("systemBackground")
+
+        // Return the preview of CardDetailsView
+        CardDetailsView(viewModel: viewModel,
+                        cardName: bindingCardName,
+                        cardNumber: bindingCardNumber,
+                        expiryDate: bindingExpiryDate,
+                        cvvCode: bindingCvvCode,
+                        cardColor: bindingCardColor)
+            .previewLayout(.sizeThatFits)
+            .padding()
+    }
+}
