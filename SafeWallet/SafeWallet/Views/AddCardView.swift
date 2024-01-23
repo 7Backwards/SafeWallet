@@ -14,6 +14,8 @@ struct AddCardView: View {
     @State private var expiryDate: String = ""
     @State private var cvvCode: String = ""
     @State private var cardColor: String = "systemBackground"
+    @State private var showAlert = false
+    @State private var alertMessage = ""
     @StateObject var viewModel: AddCardViewModel
     
     var body: some View {
@@ -37,8 +39,24 @@ struct AddCardView: View {
                         ColorCarouselView(cardColor: $cardColor, viewModel: ColorCarouselViewModel(appManager: viewModel.appManager))
                         
                         Button("Save Card") {
-                            viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode, cardColor: cardColor)
-                            presentationMode.wrappedValue.dismiss()
+                            viewModel.addCard(cardName: cardName, cardNumber: cardNumber, expiryDate: expiryDate, cvvCode: cvvCode, cardColor: cardColor) { result in
+                                switch result {
+                                case .success:
+                                    presentationMode.wrappedValue.dismiss()
+                                case .failure(let error):
+                                    // Handle the specific error, e.g., show an alert with the error description
+                                    switch error {
+                                    case .invalidDate:
+                                        alertMessage = "Invalid expiration date, please update it."
+                                    case .savingError:
+                                        alertMessage = "Something went wrong, please try again."
+                                    case .shortCardNumber:
+                                        alertMessage = "Card number is not invalid, please update it."
+                                    }
+                                    showAlert = true
+                                }
+                            }
+                            
                         }
                         .frame(width: geometry.size.width - 60, height: 50)
                         .background(Color.blue)
@@ -53,6 +71,13 @@ struct AddCardView: View {
             }) {
                 Image(systemName: "xmark")
             })
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Error"),
+                    message: Text(alertMessage),
+                    dismissButton: .default(Text("OK"))
+                )
+            }
         }
     }
 }
