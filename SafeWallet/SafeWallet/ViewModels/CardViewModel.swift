@@ -15,6 +15,11 @@ class CardViewModel: ObservableObject {
     init(card: Card, appManager: AppManager) {
         self.card = card
         self.appManager = appManager
+        appManager.utils.protectScreen()
+    }
+    
+    deinit {
+        appManager.utils.unprotectScreen()
     }
 
     func delete(completion: @escaping (Bool) -> Void ) {
