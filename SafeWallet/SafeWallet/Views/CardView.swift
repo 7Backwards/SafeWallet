@@ -60,11 +60,11 @@ struct CardView: View {
             }
         }
         .onAppear {
-            self.startAutoLockTimer()
+            startAutoLockTimer()
         }
         .onDisappear {
-            self.resetAutoLockTimer()
-            self.viewModel.updateCardColor(cardColor: cardColor)
+            resetAutoLockTimer()
+            viewModel.updateCardColor(cardColor: cardColor)
         }
         .navigationBarTitle(viewModel.card.cardName, displayMode: .inline)
         .alert(isPresented: $viewModel.shouldShowDeleteConfirmation) {

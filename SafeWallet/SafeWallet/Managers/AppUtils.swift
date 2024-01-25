@@ -8,6 +8,16 @@
 import SwiftUI
 
 class AppUtils {
+    private var protectWindow = PrivacyProtectionWindow()
+
+    func protectScreen() {
+        protectWindow.startProtection()
+    }
+
+    func unprotectScreen() {
+        protectWindow.stopProtection()
+    }
+
     func formatCardNumber(_ number: String) -> String {
         // First, filter out any non-numeric characters
         let filtered = number.filter { "0123456789".contains($0) }
@@ -35,5 +45,33 @@ class AppUtils {
         } else {
             return nil
         }
+    }
+}
+
+class PrivacyProtectionWindow {
+    private var window: UIWindow?
+
+    func startProtection() {
+        NotificationCenter.default.addObserver(self, selector: #selector(protect), name: UIApplication.willResignActiveNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(protect), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(unprotect), name: UIApplication.didBecomeActiveNotification, object: nil)
+    }
+
+    @objc func protect() {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene else { return }
+        window = UIWindow(windowScene: windowScene)
+        window?.rootViewController = UIViewController()
+        window?.windowLevel = .alert + 1
+        window?.backgroundColor = .systemBackground
+        window?.makeKeyAndVisible()
+    }
+
+    @objc func unprotect() {
+        window?.isHidden = true
+        window = nil
+    }
+
+    func stopProtection() {
+        NotificationCenter.default.removeObserver(self)
     }
 }
