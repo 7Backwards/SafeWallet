@@ -17,8 +17,16 @@ class AppConstants: ObservableObject {
     @Published var cardBackgroundOpacity = 0.35
     @Published var colors: [Color] = [.black, .purple, .red, .orange, .green, .blue, .yellow]
     @Published var colorCircleSize: CGFloat = 40
-    @Published var cardHeight: CGFloat = 190
     @Published var cardHorizontalMarginSpacing: CGFloat = 20
-    @Published var cardVerticalMarginSpacing: CGFloat = 20
     @Published var qrCodeHeight: CGFloat = 200
+    
+    func getCardHeight(sizeCategory: ContentSizeCategory) -> CGFloat {
+        if sizeCategory >= .extraExtraLarge {
+            return 200
+        } else if sizeCategory <= .small {
+            return 150
+        } else {
+            return 170
+        }
+    }
 }
